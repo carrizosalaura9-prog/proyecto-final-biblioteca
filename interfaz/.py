@@ -1,9 +1,5 @@
 from pprint import pprint
 
-
-libros = []
-
-
 libros = [
     # --- AMOR / ROMANCE ---
     {"titulo": "Bajo la Misma Estrella", "autor": "John Green", "año": 2012, "genero": "Amor"},
@@ -42,7 +38,17 @@ libros = [
     {"titulo": "El Silmarillion", "autor": "J.R.R. Tolkien", "año": 1977, "genero": "Accion"}
 ]
 
-#Consultar libros
+#Funcion para agregar un libro 
+def AggLibro():
+    autor = input("Autor del libro: ")
+    año = input("Año del libro: ")
+    genero = input("Género del libro: ")
+
+    return {"autor": autor,"año": año,"genero": genero}
+
+
+
+#Función de consultar libros
 def buscar_libro(consulta, libros):
     consulta = consulta.lower()
     resultados = []
@@ -56,31 +62,50 @@ def buscar_libro(consulta, libros):
     return resultados
 
 
+
 def Menu(): #Menu 
     while True:
         print("\n----------Biblioteca ITSON----------")
-        print("1. Agregar ")
-        print("2. agregar libro")
-        print("3. Eliminar ")
-        print("4. Salir")
-        print("5. Libros")
-        print("6. Buscar libro")
+        print("1. agregar libro")
+        print("2. Eliminar ")
+        print("3. Buscar libro")
+        print("4. Libros")
+        print("5. Salir")
         print("----------Biblioteca----------")
 
-        
+        #Agrega un libro 
+        opcion = input("Digite la opcion del menu: ")
+        print()
+        if opcion == '1':
+            titulo = input("Nombre del libro: ")
+
+            nuevo_libro = AggLibro()  
+            nuevo_libro["titulo"] = titulo  
+
+            libros.append(nuevo_libro)  
+
+            print("\nLibro agregado correctamente:")
+            print(nuevo_libro)
 
 
-        elif opcion == '3':
-            input("Que libro desea eliminar")
-
-        elif opcion == '5':
+        #Eliminar un libro
+        elif opcion == '2':
+            eliminar = input("Ingrese el título, autor o género del libro que desea eliminar: ").lower()
+            encontrado = False
             for libro in libros:
-                print(f"Título: {libro['titulo']}")
-                print(f"Autor:  {libro['autor']}")
-                print(f"Año:    {libro['año']}")
-                print("-" * 30)
+                if (eliminar in libro["titulo"].lower()):
+            
+                    libros.remove(libro)
+            
+                    print("Libro eliminado correctamente")
+                    break
+
+            else:
+                print("No se encontró ningún libro que coincida.")
+
+    
         #Buscar libros por nombre, autor, genero y años
-        elif opcion == '6':
+        elif opcion == '3':
             consulta = input("Buscar por título, autor o género: ")
             resultados = buscar_libro(consulta, libros)
             print()
@@ -95,9 +120,16 @@ def Menu(): #Menu
             else:
                 print("No se encontraron resultados.")
 
+        #Imprimir (Mostrar) Todos los libros
         elif opcion == '4':
-            break
-   
+            for libro in libros:
+                print(f"Título: {libro['titulo']}")
+                print(f"Autor:  {libro['autor']}")
+                print(f"Año:    {libro['año']}")
+                print("-" * 30)
 
+        #Salir del programa
+        elif opcion == '5':
+            break
 
 Menu()
