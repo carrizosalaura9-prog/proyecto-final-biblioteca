@@ -1,0 +1,11 @@
+{
+  "next_id": 2,
+  "loans": {
+    "1": {
+      "usuario": "Hessel",
+      "libro": "CAca",
+      "fecha": "30/11/2025 19:12",
+      "devuelto": false
+    }
+  }
+}
