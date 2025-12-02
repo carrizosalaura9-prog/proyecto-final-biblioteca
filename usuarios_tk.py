@@ -48,8 +48,8 @@ def iniciar_sesion(id_entry, contraseña_entry, ver_ultimo_usuario_label_widget)
         else:
            nombre_guardado= usuarios[ID]["nombre"]        
            ultimo_usuario_activo= ID #guarda el ultimo usuario (ID)
-           ultimo_usuario= f"Ultimo usuario activo: {nombre_guardado}, ID: {ID}"
-           ver_ultimo_usuario_label_widget.config(text=ultimo_usuario, fg="#4D832C")
+           ultimo_usuario= f"Ultimo usuario activo: {nombre_guardado}, ID: {ID}" #texto que saldra en la interfaz
+           ver_ultimo_usuario_label_widget.config(text=ultimo_usuario, fg="#4D832C") #ver el ultimo usuario en la interfaz
            messagebox.showinfo("Inicio de sesion Exitoso", f"Bienvenido {nombre_guardado} :)")
 
            #limpiar todo, desde el inicio (0)
