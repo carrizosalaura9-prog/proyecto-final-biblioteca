@@ -20,6 +20,7 @@ def registrar_usuario(nombre_n_entry, id_entry, contraseña_entry,):
         else:
            usuarios[ID_nuevo] = {"nombre": nombre_nuevo, "contraseña": contraseña_nueva} #meter los datos en usuarios
            messagebox.showinfo("Registro Exitoso", f"El usuario {nombre_nuevo} se ha registrado con éxito.")
+           
            #limpiar todo, desde el inicio (0)
            id_entry.delete(0, tk.END)
            contraseña_entry.delete(0, tk.END)
@@ -29,7 +30,7 @@ def registrar_usuario(nombre_n_entry, id_entry, contraseña_entry,):
         messagebox.showerror("Error de ID", "El ID debe ser un número entero.")
 
 
-def iniciar_sesion(id_entry, contraseña_entry):
+def iniciar_sesion(id_entry, contraseña_entry, ver_ultimo_usuario_label_widget):
   global ultimo_usuario_activo #modifica el valor cada vez que se inicie sesion
   try:
         #obtener los datos
@@ -47,7 +48,10 @@ def iniciar_sesion(id_entry, contraseña_entry):
         else:
            nombre_guardado= usuarios[ID]["nombre"]        
            ultimo_usuario_activo= ID #guarda el ultimo usuario (ID)
+           ultimo_usuario= f"Ultimo usuario activo: {nombre_guardado}, ID: {ID}"
+           ver_ultimo_usuario_label_widget.config(text=ultimo_usuario, fg="#4D832C")
            messagebox.showinfo("Inicio de sesion Exitoso", f"Bienvenido {nombre_guardado} :)")
+
            #limpiar todo, desde el inicio (0)
            id_entry.delete(0, tk.END)
            contraseña_entry.delete(0, tk.END)
