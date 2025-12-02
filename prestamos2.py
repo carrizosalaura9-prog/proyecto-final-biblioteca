@@ -18,8 +18,6 @@ import os
 
 # Archivo donde se guardarán los préstamos en formato JSON
 DATA_FILE = "loans.json"
-
-
 # ----------------------------------------------------------------------
 #      CLASE QUE GESTIONA LOS PRÉSTAMOS (LÓGICA DEL PROGRAMA)
 # ----------------------------------------------------------------------
@@ -289,7 +287,10 @@ def main():
     manager = LoanManager()  # lógica
     app = BibliotecaApp(manager)  # interfaz gráfica
     app.mainloop()  # ejecutar app
-
+def abrir_biblioteca():
+    manager = LoanManager()
+    app = BibliotecaApp(manager)
+    app.mainloop()
 
 if __name__ == "__main__":
     main()
