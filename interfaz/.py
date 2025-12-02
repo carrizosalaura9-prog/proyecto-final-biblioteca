@@ -107,7 +107,7 @@ def actualizar_lista():
 ventana = tk.Tk()
 ventana.title("Libros")
 
-label = tk.Label(ventana, text="AGREGAR UN LIBRO")
+label = tk.Label(ventana, text="AGREGAR UN LIBRO.")
 label.pack(padx=5)
 
 label = tk.Label(ventana, text="ID")
@@ -140,17 +140,17 @@ label.pack(padx=5)
 genero = tk.Entry(ventana, width=40)
 genero.pack(pady=5)
 
-btn_agregar = tk.Button(ventana, text="Agregar libro", command=lambda: agregar_libro(id, titulo, autor, anio, genero))
+btn_agregar = tk.Button(ventana, text="Agregar libro", command=lambda: agregar_libro(id, titulo, autor, anio, genero), bg="#45DE28")
 btn_agregar.pack(pady=5)
 
-label = tk.Label(ventana, text="ELIMINAR UN LIBRO:")
+label = tk.Label(ventana, text="ELIMINAR UN LIBRO.",)
 label.pack(pady=5)
 
 eliminar_libro2 = tk.Entry(ventana, width=40)
 eliminar_libro2.pack(pady=5)
 
 
-btn_eliminar2 = tk.Button(ventana, text= "eliminar_libro", command=eliminar_libro)
+btn_eliminar2 = tk.Button(ventana, text="Eliminar libro", command=eliminar_libro, bg="#F54927")
 btn_eliminar2.pack(pady=5)
 
 
@@ -164,3 +164,4 @@ lista_libros.pack(pady=10)
 actualizar_lista()
 
 ventana.mainloop()
+
