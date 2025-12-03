@@ -1,4 +1,4 @@
-
+# Codigo hecho por Hessel Valverde
 from tkinter import messagebox
 from datetime import date
 from libros import libros
@@ -143,4 +143,5 @@ def devolver_libro(entry_titulo, listbox_prestamos, combobox_libro):
     
     entry_titulo.delete(0, tk.END)
     actualizar_listbox_prestamos(listbox_prestamos, prestamos)
+
     actualizar_combobox_libros(combobox_libro, libros)
