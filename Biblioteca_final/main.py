@@ -6,7 +6,10 @@ from tkinter import ttk
 from usuarios import registrar_usuario, iniciar_sesion
 from libros import agregar_libro, buscar_libro, eliminar_libro, actualizar_listbox, libros
 from guardar_datos import cargar_datos, guardar_datos
-
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+from matplotlib.figure import Figure
+import matplotlib.pyplot as plt
+import graficas
 
 from prestamos import prestar_libro, devolver_libro, obtener_prestados, actualizar_listbox_prestamos, actualizar_combobox_libros 
 menu_lateral = None
@@ -114,7 +117,7 @@ def crear_interfaz_prestamos():
     barra_superior_prestamos = tk.Frame(ventana_prestamos, background="#052B3F")
     barra_superior_prestamos.pack(fill="x")
 
-    boton_salir_prestamos = tk.Button(barra_superior_prestamos, text="Salir", font="Verdana 10", foreground="#ffffff", background="#960A0A", borderwidth=0, command=ventana_prestamos.destroy)
+    boton_salir_prestamos = tk.Button(barra_superior_prestamos, text="Salir", font="Verdana 10", foreground="#ffffff", background="#960A0A", borderwidth=0, command=lambda:(guardar_datos(),ventana_prestamos.destroy()))
     boton_salir_prestamos.pack(padx=10, pady=10, side="right")
 
     etiqueta_titulo_prestamos = tk.Label(barra_superior_prestamos, text="Gestión de Préstamos", font="Verdana 15 bold", foreground="#ffffff", background="#052B3F")
@@ -198,14 +201,14 @@ def crear_ventana_libros():
 
     root3 = tk.Toplevel(root)
     root3.title("Gestión de Libros")
-    centrar_ventana(root3, 800, 600)
+    centrar_ventana(root3, 850, 700)
 
     
     #Igual tiene la misma estructura que todas las demas con la barra superior, el titulo, los entrys y las labels
     barra_superior_libros = tk.Frame(root3, background="#052B3F")
     barra_superior_libros.pack(fill="x")
 
-    boton_salir = tk.Button(barra_superior_libros, text="Salir", font="Verdana 10", foreground="#ffffff", background="#960A0A", borderwidth=0, command=root3.destroy)
+    boton_salir = tk.Button(barra_superior_libros,text="Salir y Guardar",font="Verdana 10",foreground="#ffffff", background="#960A0A", borderwidth=0, command=lambda:(guardar_datos(),root3.destroy()))
     boton_salir.pack(padx=10, pady=10, side="right")
 
     etiqueta_titulo = tk.Label(barra_superior_libros, text="Gestión de Libros", font="Verdana 15 bold", foreground="#ffffff", background="#052B3F")
@@ -352,7 +355,67 @@ def crear_interfaz_usuario():
     boton_iniciar_sesion= tk.Button(panel_principal_usuarios, text="Iniciar Sesión", width=18, command=lambda: iniciar_sesion(entry_id, entry_contraseña,etiqueta_usuario))
     boton_iniciar_sesion.pack(side="right", padx=10)
 
+#creo el widget para graficas (echo por Laura)
+def dibujar_grafica_en_frame(frame_contenedor, figura_mpl):
+    #elimina cualquier widghet que haya
+    for widget in frame_contenedor.winfo_children():
+        widget.destroy()
 
+    if figura_mpl is None:
+        tk.Label(
+            frame_contenedor, 
+            text="No hay datos para mostrar el gráfico (Verifica los CSV).", 
+            fg="red"
+        ).pack(pady=20)
+        return
+
+    #creo las canvas
+    canvas = FigureCanvasTkAgg(figura_mpl, master=frame_contenedor)
+    canvas.draw() 
+    canvas_widget = canvas.get_tk_widget()
+    toolbar = NavigationToolbar2Tk(canvas, frame_contenedor)
+    toolbar.update()
+    
+    #lo ordeno
+    toolbar.pack(side=tk.BOTTOM, fill=tk.X)
+    canvas_widget.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+
+#ahora la interfaz (echo por Laura)
+def crear_interfaz_graficas():
+    #crea una nueva ventana para mostrar y actualizar las gráficas de la biblioteca
+    root_graficas = tk.Toplevel(root)
+    root_graficas.title("Análisis de la Biblioteca - Gráficas")
+    root_graficas.geometry("1200x600")
+    barra_superior = tk.Frame(root_graficas, background="#052B3F")
+    barra_superior.pack(fill="x")
+    tk.Label(barra_superior, text="Gráficas de la Biblioteca", font="Verdana 15 bold", foreground="#ffffff", background="#052B3F").pack(padx=10, pady=10, side="left")
+    
+    #panel Principal y contenedores 
+    panel_principal_graficas = tk.Frame(root_graficas, background="#C7D3EE")
+    panel_principal_graficas.pack(expand=True, fill="both")
+    frame_barras = tk.Frame(panel_principal_graficas, bd=2, relief=tk.GROOVE)
+    frame_barras.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=5, pady=5)
+    frame_pastel = tk.Frame(panel_principal_graficas, bd=2, relief=tk.GROOVE)
+    frame_pastel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=5, pady=5)
+
+    #permite actualizar
+    def actualizar_y_dibujar_graficas():
+        #se lee el csv de nuevo
+        figura_barras = graficas.generar_grafica_barras_generos_mpl()
+        figura_pastel = graficas.generar_grafica_pastel_prestados_mpl()
+
+        #se dibujan las graficas
+        dibujar_grafica_en_frame(frame_barras, figura_barras)
+        dibujar_grafica_en_frame(frame_pastel, figura_pastel)
+        
+    #aqui son los botones
+    #salir
+    tk.Button(barra_superior, text="Salir", font="Verdana 10", foreground="#ffffff", background="#960A0A", borderwidth=0, command=root_graficas.destroy).pack(padx=10, pady=10, side="right")
+    
+    #actualizar graficas
+    boton_actualizar = tk.Button(barra_superior,text="Actualizar Gráficas", font="Verdana 10 bold", foreground="#ffffff", background="#960A0A", borderwidth=0, command=actualizar_y_dibujar_graficas)
+    boton_actualizar.pack(padx=10, pady=10, side="right") 
+    actualizar_y_dibujar_graficas()
 
 #Ventana principal
 root = tk.Tk()
@@ -362,10 +425,6 @@ centrar_ventana(root,800,600)
 
 #con esta funcion importada se cargaran los datos de los documentos en csv
 cargar_datos()
-
-
-
-
 
 #Barra superior y sus widgets esta estructura se usa en todas las ventanas
 
@@ -417,6 +476,12 @@ boton_usuarios.bind("<Enter>", pasar_mouse)
 boton_usuarios.bind("<Leave>", quitar_mouse)
 
 
+boton_graficas = tk.Button(menu_lateral, text="Gráficas", font="Verdana 15", foreground="#ffffff", background="#073650", borderwidth=0, command=crear_interfaz_graficas)
+boton_graficas.pack(fill="x", pady=10)
+
+boton_graficas.bind("<Enter>", pasar_mouse)
+boton_graficas.bind("<Leave>", quitar_mouse)
+
 boton_informacion = tk.Button(menu_lateral,text="Más información",font="Verdana 10",foreground="#ffffff", background="#073650", borderwidth=0,command=mas_informacion)
 boton_informacion.pack(side="bottom",fill="x", pady=10)
 
@@ -430,6 +495,38 @@ panel_principal.pack(side=tk.RIGHT,fill="both",expand=True)
 
 etiqueta_anuncio = tk.Label(panel_principal, text="     AVISO: Recuerda devolver los libros a tiempo. Horario de 7:00 a 20:00     ", font=("Verdana 13"), bg="#C7D3EE", fg="#960A0A")
 etiqueta_anuncio.pack(side="bottom", fill="x", pady=10)
+
+etiqueta_Nombres = tk.Label(panel_principal, text="""
+                            
+MANUAL DE USUARIO:
+                            
+¡Bienvenido a biblioteca!                         
+Estamos felices de que uses nuestro sistema. 
+Este manual te guiará rápidamente por las cuatro secciones principales para que puedas gestionar libros, usuarios y préstamos de forma sencilla.
+
+(>) Usuarios
+Esta es tu puerta de entrada al sistema. Aquí controlas quién accede a la aplicación.
+Registrar Usuario: Ingresa un ID (Número), un Nombre, y una Contraseña. Presiona este botón para crear una nueva cuenta en el sistema.
+Iniciar Sesión: Si ya tienes una cuenta, ingresa tu ID y Contraseña para acceder a todas las funciones. Si tienes éxito, el programa sabrá quién eres
+
+(>) Libros
+Esta es la sección de inventario, el corazón de la biblioteca. Desde aquí gestionas el catálogo y la base de datos de todos los títulos disponibles.
+Agregar Nuevos Títulos: Para incluir un nuevo libro, llena todos los campos de la izquierda: ID, Título, Autor, Año y Género. Una vez completados, presiona el botón Agregar Libro.
+Eliminar Títulos: Si un libro deseas eliminar un libro solo ingresa su titulo
+Buscar y Filtrar: Utiliza los campos de texto para encontrar libros específicos o ver todo el catálogo
+                            
+(>) Prestamos
+Seccion que te muestra los libros dispoibles, pide el tuyo solo con tu nombre
+Devoluciones: Ingressa solo el titulo del libro a devolver. 
+
+(>) Graficas
+Esta sección te muestra un resumen visual de la actividad y el inventario de tu biblioteca, leyendo los datos de los archivos de libros y préstamos.                  
+Gráfica de Barras: Muestra el Total de Libros por Género que tienes en inventario.
+Gráfica de Pastel: Muestra la Distribución de Géneros más Prestados, basada en los registros de la sección Préstamos.
+                                                                                   
+""", font="Verdana 11 ",foreground="#000000",background="#C7D3EE", justify="left")
+etiqueta_Nombres.pack(side="left", padx=20, pady=20)
+
 
 #para que la hora este siempre actualizandose
 actualizar_hora()

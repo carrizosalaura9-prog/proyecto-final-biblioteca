@@ -1,0 +1,31 @@
+id,titulo,autor,año,genero,disponible
+183421,El monje,Autor 1,1990,Terror,True
+298314,Casa oscura,Autor 2,1985,Terror,True
+537812,Noche roja,Autor 3,2001,Terror,True
+624551,El demonio,Autor 4,1978,Terror,True
+731290,La sombra,Autor 5,1999,Terror,True
+845903,Puerta negra,Autor 6,2010,Terror,True
+952771,El ritual,Autor 7,2008,Terror,True
+168332,Luz muerta,Autor 8,1992,Terror,True
+279441,Bosque gris,Autor 9,1995,Terror,True
+100000,Eco final,Autor 10,2018,Terror,True
+100001,Amor eterno,Autor 11,2005,Amor,True
+100002,Besos dulces,Autor 12,2012,Amor,True
+100003,Corazon rojo,Autor 13,1999,Amor,False
+100004,Nuestro dia,Autor 14,2017,Amor,True
+100005,Bella historia,Autor 15,2001,Amor,True
+100006,Cita perfecta,Autor 16,2019,Amor,True
+100007,Mi destino,Autor 17,2003,Amor,True
+100008,Flor blanca,Autor 18,1994,Amor,True
+100009,Dulce luna,Autor 19,2020,Amor,True
+100010,Caminos juntos,Autor 20,2015,Amor,True
+323111,Furia total,Autor 21,2002,Accion,True
+323112,Cuenta atras,Autor 22,2010,Accion,True
+323113,Carga mortal,Autor 23,2007,Accion,True
+323114,Linea de fuego,Autor 24,1998,Accion,True
+323115,Zona roja,Autor 25,2004,Accion,True
+323116,Venganza fría,Autor 26,2013,Accion,True
+323117,Golpe final,Autor 27,2016,Accion,True
+323118,Lucha urbana,Autor 28,2001,Accion,True
+323119,Operacion sombra,Autor 29,2018,Accion,True
+323120,Camino de acero,Autor 30,1996,Accion,False

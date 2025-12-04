@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import messagebox
 
 #asignamos el nombre del archvio con los usuarios a una variable
-NOMBRE_ARCHIVO= "usuarios.txt"
+NOMBRE_ARCHIVO= "usuarios.csv"
 usuarios = {}
 ultimo_usuario_activo= None
 
