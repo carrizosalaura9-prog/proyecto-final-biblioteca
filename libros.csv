@@ -11,7 +11,7 @@ id,titulo,autor,año,genero,disponible
 100000,Eco final,Autor 10,2018,Terror,True
 100001,Amor eterno,Autor 11,2005,Amor,True
 100002,Besos dulces,Autor 12,2012,Amor,True
-100003,Corazon rojo,Autor 13,1999,Amor,False
+100003,Corazon rojo,Autor 13,1999,Amor,True
 100004,Nuestro dia,Autor 14,2017,Amor,True
 100005,Bella historia,Autor 15,2001,Amor,True
 100006,Cita perfecta,Autor 16,2019,Amor,True
@@ -24,8 +24,9 @@ id,titulo,autor,año,genero,disponible
 323113,Carga mortal,Autor 23,2007,Accion,True
 323114,Linea de fuego,Autor 24,1998,Accion,True
 323115,Zona roja,Autor 25,2004,Accion,True
-323116,Venganza fría,Autor 26,2013,Accion,True
+323116,Venganza fría,Autor 26,2013,Accion,False
 323117,Golpe final,Autor 27,2016,Accion,True
 323118,Lucha urbana,Autor 28,2001,Accion,True
 323119,Operacion sombra,Autor 29,2018,Accion,True
 323120,Camino de acero,Autor 30,1996,Accion,False
+133,l,l,133,Intento uno,False
