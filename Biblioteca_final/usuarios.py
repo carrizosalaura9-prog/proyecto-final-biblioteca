@@ -39,7 +39,6 @@ def registrar_usuario(nombre_n_entry, id_entry, contraseña_entry,):
 
     
 
-
 def iniciar_sesion(id_entry, contraseña_entry, ver_ultimo_usuario_label_widget):
   global ultimo_usuario_activo #modifica el valor cada vez que se inicie sesion
   try:
@@ -68,3 +67,22 @@ def iniciar_sesion(id_entry, contraseña_entry, ver_ultimo_usuario_label_widget)
 
   except ValueError: #Si el ID no es puesto en numeros
         messagebox.showerror("Error de ID", "El ID debe ser un número entero.")
+
+#parte echa por Laura csv
+try:
+  #se lee el archivo con r 
+   with open(NOMBRE_ARCHIVO, 'r', encoding='utf-8') as f:
+    for linea in f:
+      #limpiamos la línea y la separamos por comas
+      partes = linea.strip().split(',')
+      if len(partes) == 3: 
+        try:
+          ID = int(partes[0])
+          nombre = partes[1]
+          contraseña = partes[2]
+          usuarios[ID] = {"nombre": nombre, "contraseña": contraseña}
+        except ValueError:
+          continue
+except FileNotFoundError:
+  #si es la primera ejecucion y detecta que el archivo no existe lo ignora
+  pass
