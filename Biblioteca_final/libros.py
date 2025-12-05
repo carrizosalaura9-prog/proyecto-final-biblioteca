@@ -183,10 +183,10 @@ def eliminar_libro(entry_titulo, listbox_libros):
     if len(nueva_lista) < len(libros):
         libros[:] = nueva_lista 
         
-        # ---> AGREGAR ESTO PARA GUARDAR AL INSTANTE <---
+        
         from guardar_datos import guardar_datos
         guardar_datos()
-        # -----------------------------------------------
+        
 
         entry_titulo.delete(0, tk.END)
         actualizar_listbox(listbox_libros, libros)
